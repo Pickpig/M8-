@@ -1,0 +1,427 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />-->
+    //<script type="text/javascript" src="CityList_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+    <!--<link rel="stylesheet" type="text/css" href="css/scxnTabDiv.css" />
+    <link rel="stylesheet" type="text/css" href="css/baidu.css" />
+    <link rel="stylesheet" type="text/css" href="bmap.css" />-->
+    <title>地图显示</title>
+
+
+    <style type="text/css">
+        .anchorBL {
+            display: none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div style="width: 100%; height: 100%; border: 1px solid gray; position: absolute;" id="container"></div>
+    <div id="position" style="width: initial; height: initial; border: 0px solid gray; position: absolute; background-color: transparent; margin: 0,auto,auto,25%; top: 4%; z-index: 9999"></div>
+</body>
+</html>
+
+<script type="text/javascript" src="js/BaiduApi_2.0.js">
+</script>
+<script type="text/javascript" src="js/AreaRestriction_min.js">
+</script>
+<script type="text/javascript" src="js/TextIconOverlay_min.js">
+</script>
+<script type="text/javascript" src="js/scxnLabel.js">
+</script>
+<script type="text/javascript" src="js/config.js"> 
+</script>
+<script type="text/javascript" src="js/DistanceTool_min.js">
+</script>
+<script type="text/javascript" src="js/data_Map.js">
+</script>
+<script type="text/javascript" src="js/RectangleZoom_min.js">
+</script>
+<script type="text/javascript" src="js/ScxnTools.js">
+</script>
+<script type="text/javascript" src="js/scxnTabDiv.js">
+</script>
+<script type="text/javascript" src="js/Transform.js">
+</script>
+<script type="text/javascript">
+
+    var lineArray = new Array();		//��ͼ�������߼��ϣ����ߵ�ͼ�����иü��ϣ�û�еĻ��߲���ʾ
+    var oneLine = new BMap.Polyline();//ʵ�����߶���ͬlineArray
+    var lstMouseCenterMarker = new Array();//Բ�ڵ㼯��
+    var lstAllMarker = new Array();//���е㼯��
+    var lstRutMarker = new Array();//���޵㼯��
+    var lstBrokenMarker = new Array();//����㼯��
+    var lstCircle = new Array();//Բ����
+    var points = [];
+    var bPoints = [];
+    var donePoints = [];
+    var Bpoints = [];
+    var timeArr=[];
+    var interval;
+    var velocity;
+
+    var map;   //�ٶȵ�ͼ����  
+    var car;   //����ͼ��  
+    var label; //��Ϣ��ǩ  
+    var centerPoint;
+
+    var index = 0; //��¼���ŵ��ڼ���point  
+    var followChk, playBtn, pauseBtn, resetBtn; //�������ư�ť  
+
+        //��ͼ����.
+        var mapOptions = {minZoom: 13, //��С���ż���
+            mapType: BMAP_NORMAL_MAP//��ά��ͼ����������������ǵ�ͼ
+        }
+        //var map = new BMap.Map("container", mapOptions);
+        var map = new BMap.Map("container", { mapType: BMAP_NORMAL_MAP });      //��������ͼΪ��ͼ
+        var initPoint = new BMap.Point(115.358104, 38.880059);    // ��ͼ��ʼ��ʱ��Ҫָ��һ�����ĵ������
+        //var initPoint = new BMap.Point(116.404, 39.915);    // ��ͼ��ʼ��ʱ��Ҫָ��һ�����ĵ������
+        map.centerAndZoom(initPoint, 16);                    // ���õ�ͼ��ʼ������ʾ��λ�ú����ż���
+        //map.setCurrentCity("����");          // ���õ�ͼ��ʾ�ĳ��� �����Ǳ������õ�
+        map.enableScrollWheelZoom();                  // ʹ�������ſ���
+        map.enableKeyboard();                         // ʹ�������������ƶ���ͼ����
+        map.enableContinuousZoom();										//��������
+
+        var top_left_control = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_TOP_LEFT });// �����߿ؼ�
+        map.addControl(new BMap.OverviewMapControl({ isOpen: true })); //���Ե�ͼ�ؼ���Ĭ��λ�ڵ�ͼ���·�����һ�����۵������Ե�ͼ
+        var top_left_navigation = new BMap.NavigationControl();  //���ſؼ�
+        var top_right_navigation = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL }); //���ſؼ�
+    
+        map.addControl(new BMap.ScaleControl());
+        map.addControl(top_left_control);
+        map.addControl(top_left_navigation);
+        map.addControl(top_right_navigation);
+
+        addCabinMarker(initPoint);
+
+        //��ʼ����ͼ�������
+        function addCabinMarker(point)
+        {
+            var cabinIcon = new BMap.Icon("images/cabin.png", new BMap.Size(32, 37));
+            var cabinMarkerOptions = { icon: cabinIcon, enableDragging: true, draggingCursor: "move", title: "center" }
+            var cabinMarker = new BMap.Marker(point, cabinMarkerOptions);
+            cabinMarker.setAnimation(BMAP_ANIMATION_DROP);//���ó�ʼ�����ͼ�����ʽ
+            map.addOverlay(cabinMarker); //���ͼ��ӳ�ʼ�����ͼ��
+            cabinMarker.addEventListener("dragging", function (e) { document.getElementById("position").innerHTML = e.point.lng + "," + e.point.lat; });
+            cabinMarker.addEventListener("click", function (e) { });
+        }
+
+        function addCabinMarker1(point) {
+            var cabinIcon = new BMap.Icon("images/plane.png", new BMap.Size(32, 37));
+            var cabinMarkerOptions = { icon: cabinIcon, enableDragging: true, draggingCursor: "move", title: "center" }
+            var cabinMarker = new BMap.Marker(point, cabinMarkerOptions);
+            cabinMarker.setAnimation(BMAP_ANIMATION_DROP);//���ó�ʼ�����ͼ�����ʽ 
+            map.addOverlay(cabinMarker); //���ͼ��ӳ�ʼ�����ͼ��
+            cabinMarker.addEventListener("dragging", function (e) { document.getElementById("position").innerHTML = e.point.lng + "," + e.point.lat; });
+            cabinMarker.addEventListener("click", function (e) { });
+        }
+        map.addEventListener("click", function (e) { map.enableScrollWheelZoom(); });
+
+        //
+        var linePoints = new Array();
+        var linePoints1 = new Array();
+        //��Ӻ����������������
+        function addLine(ps)
+        {
+            var infos = ps.split("\r\n");
+            linePoints = new Array();
+            for (var i = 0; i < infos.length; i++)
+            {
+                if (infos[i] == "")
+                    continue;
+                var pos1 = infos[i].split(" ")[0];
+                var pos2 = infos[i].split(" ")[1];
+                var initPoint1 = new BMap.Point(pos1, pos2);
+                linePoints.push(initPoint1);
+            }
+
+            //ʵ�����ߣ��������㼯�ϣ�������
+            oneLine = new BMap.Polyline(linePoints, { strokeColor: "red", strokeWeight: 3, strokeOpacity: 0.5 });
+            lineArray.push(oneLine);
+            map.addOverlay(oneLine);//������ӵ���ͼ
+
+            //����ߵĵ���¼�
+            oneLine.addEventListener("click", function (e) { lineClick(e); });
+            initPoint = new BMap.Point(infos[0].split(" ")[0], infos[0].split(" ")[1]);
+            //initPoint = new BMap.Point(infos[infos.length - 1].split(" ")[0], infos[infos.length - 1].split(" ")[1]);
+            addCabinMarker(initPoint);
+            addCabinMarker1(initPoint1);
+            //map.centerAndZoom(initPoint1, 13);
+        }
+
+        //��������µĵ㣬���뵽�켣��
+        function dynamicLine(ps)
+        {
+            var infos = ps.split("\r\n");
+            var makerPoints = [];
+            var newLinePoints = [];
+            var len=infos.length/2;
+            linePoints = new Array();
+            for (var i = 0; i < infos.length; i++) {
+                    var pos1 = infos[i].split(" ")[0] * 1;
+                    var pos2 = infos[i].split(" ")[1] * 1;
+                    var initPoint1 = new BMap.Point(pos1, pos2);
+                    linePoints.push(initPoint1);
+                    if (i % 10 == 0) {
+                        newLinePoints = new BMap.Point(infos[i].split("")[0], infos[i].split("")[1]);
+                        makerPoints.push(newLinePoints);
+
+                        }
+                    }
+            function drawLine() {
+                oneLine = new BMap.Polyline(makerPoints, { strokeColor: "green", strokeWeight: 3, strokeOpacity: 0.5 });
+                map.addOverlay(oneLine);
+                    setInterval(drawLine(), 1000);
+            }
+            if (linePoints.length == 0)
+                return;
+            //oneLine = new BMap.Polyline(linePoints, { strokeColor: "green", strokeWeight: 3, strokeOpacity: 0.5 });
+            map.addOverlay(oneLine);
+            setZoom(bPoints);
+        }
+
+        function addMarker(points) {
+            for (var i = 0, pointLen = points.length; i < pointLen; i++) {
+                var point = new BMap.Point(points[i].lng, points[i].lat);
+                var marker = new BMap.Marker(point);
+                map.addOverlay(marker);
+                //map.addOverlay(marker);
+                //(function () {
+                //var thePoint = points[i];
+                //marker.addEventListener("click", function () {
+                //showInfo(this.thePoint);
+                //});
+                //})();
+            }
+        }
+
+        function getRandom(n) {
+            return Math.floor(Math.random()*n+1)
+        }
+
+        function setZoom(bPoints) {
+            var view = map.getViewport(eval(bPoints));
+            var mapZoom = view.zoom;
+            var centerpoint = view.center;
+            map.centerAndZoom(centerpoint, mapZoom);
+        }
+
+        //������¼������������巽��������Բ�ڵ����겢��ʾ�ڵ�ͼ��
+        function lineClick(e)
+        {
+            hideAllPoint();
+            hideBroken();
+            hideRut();
+            for (var i = 0; i < lstMouseCenterMarker.length; i++)
+            {
+                lstMouseCenterMarker[i].remove();
+            }
+            lstMouseCenterMarker = new Array();
+            lstCircle = new Array();
+            var circle = new BMap.Circle(new BMap.Point(e.point.lng, e.point.lat), 160, { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 });
+            map.addOverlay(circle);
+            lstCircle.push(circle);
+            var centerPs = window.external.GetMouseCenterPoint(e.point.lng + "|" + e.point.lat, 160);
+            if (centerPs == "")
+                return;
+            var infos = centerPs.split("\r\n");
+            for (var i = 0; i < infos.length; i++)
+            {
+                var index = infos[i].split("|")[0];
+                var pos1 = infos[i].split("|")[1] * 1;
+                var pos2 = infos[i].split("|")[2] * 1;
+                var p = new BMap.Point(pos1, pos2);
+                var iconP = new BMap.Icon("images/CustomerLocation_16x16.png", new BMap.Size(16, 16));
+                var markerOptions = { icon: iconP, enableDragging: false, draggingCursor: "move", title: index }
+                var markerP = new BMap.Marker(p, markerOptions);
+                markerP.setAnimation(BMAP_ANIMATION_DROP);
+                lstMouseCenterMarker.push(markerP);
+                map.addOverlay(markerP); (function () { var j = index; markerP.addEventListener("click", function () { markerClick(j); }); })();
+            }
+        }
+
+        function showLine() 
+        {
+            for (var i = 0; i < lineArray.length; i++)
+            {
+                lineArray[i].show();
+            }
+        }
+
+        function hideLine()
+        {
+            for (var i = 0; i < lineArray.length; i++)
+            {
+                lineArray[i].hide();
+            }
+        }
+
+        function showPoint()
+        {
+            showCircle();
+            for (var i = 0; i < lstMouseCenterMarker.length; i++)
+            {
+                lstMouseCenterMarker[i].show();
+            }
+        }
+
+        function showCircle()
+        {
+            for (var i = 0; i < lstCircle.length; i++)
+            {
+                lstCircle[i].show();
+            }
+        }
+
+        function hideCircle()
+        {
+            for (var i = 0; i < lstCircle.length; i++)
+            {
+                lstCircle[i].hide();
+            }
+        }
+
+        function clearCircle()
+        {
+            hideCircle();
+            lstCircle.length = 0;
+        }
+
+        //�����ͼ�ϵ����и���
+        function clearMapOverLays()
+        {
+            lstMouseCenterMarker = new Array();
+            lstAllMarker = new Array();
+            lstCircle = new Array();
+            lineArray = new Array();
+            lstRutMarker = new Array();//
+            lstBrokenMarker = new Array();//
+            map.clearOverlays();
+        }
+
+        //��ȡ���޺�����ĵ㼯��
+        function getRutAndBroken()
+        {
+            lstRutMarker = new Array();
+            var centerPs = window.external.GetPointByBadType("·�泵��");
+            var infos = centerPs.split("\r\n");
+            for (var i = 0; i < infos.length; i += 1)
+            {
+                var index = infos[i].split("|")[0];
+                var pos1 = infos[i].split("|")[1] * 1;
+                var pos2 = infos[i].split("|")[2] * 1;
+                var p = new BMap.Point(pos1, pos2);
+                var iconP = new BMap.Icon("images/Rut.png", new BMap.Size(16, 16));
+                var markerOptions = { icon: iconP, enableDragging: false, draggingCursor: "move", title: index }
+                var markerP = new BMap.Marker(p, markerOptions);
+                markerP.setAnimation(BMAP_ANIMATION_DROP);
+                lstRutMarker.push(markerP);
+                map.addOverlay(markerP);
+                markerP.hide();
+                (function () { var j = index; markerP.addEventListener("click", function () { markerClick(j); }); })();
+            }
+
+            lstBrokenMarker = new Array();
+            centerPs = window.external.GetPointByBadType("·������");
+            infos = centerPs.split("\r\n");
+            for (var i = 0; i < infos.length; i += 1)
+            {
+                var index = infos[i].split("|")[0];
+                var pos1 = infos[i].split("|")[1] * 1;
+                var pos2 = infos[i].split("|")[2] * 1;
+                var p = new BMap.Point(pos1, pos2);
+                var iconP = new BMap.Icon("images/Broken.png", new BMap.Size(32, 32));
+                var markerOptions = { icon: iconP, enableDragging: false, draggingCursor: "move", title: index }
+                var markerP = new BMap.Marker(p, markerOptions);
+                markerP.setAnimation(BMAP_ANIMATION_DROP);
+                lstBrokenMarker.push(markerP);
+                map.addOverlay(markerP);
+                markerP.hide();
+                (function () { var j = index; markerP.addEventListener("click", function () { markerClick(j); }); })();
+            }
+        }
+
+        function markerClick(i)
+        {
+            window.external.ShowPointInfo(i);
+        }
+
+        function showRut()
+        {
+            for (var i = 0; i < lstRutMarker.length; i++)
+            {
+                lstRutMarker[i].show();
+            }
+        }
+
+        function hideRut()
+        {
+            for (var i = 0; i < lstRutMarker.length; i++)
+            {
+                lstRutMarker[i].hide();
+            }
+        }
+
+        function showBroken()
+        {
+            for (var i = 0; i < lstBrokenMarker.length; i++)
+            {
+                lstBrokenMarker[i].show();
+            }
+        }
+
+        function hideBroken()
+        {
+            for (var i = 0; i < lstBrokenMarker.length; i++)
+            {
+                lstBrokenMarker[i].hide();
+            }
+        }
+
+        function showAllPoint()
+        {
+            lstAllMarker = new Array();
+            var centerPs = window.external.GetPointByBadType("");
+            var infos = centerPs.split("\r\n");
+            hideBroken();
+            hideRut();
+            for (var i = 0; i < infos.length; i += 1)
+            {
+                var index = infos[i].split("|")[0];
+                var pos1 = infos[i].split("|")[1] * 1;
+                var pos2 = infos[i].split("|")[2] * 1;
+                var p = new BMap.Point(pos1, pos2);
+                var iconP = new BMap.Icon("images/CustomerLocation_16x16.png", new BMap.Size(16, 16));
+                var markerOptions = {icon: iconP,enableDragging: false,draggingCursor: "move",title: index}
+                var markerP = new BMap.Marker(p, markerOptions);
+                markerP.setAnimation(BMAP_ANIMATION_DROP);
+                lstAllMarker.push(markerP);
+                map.addOverlay(markerP);
+            }
+        }
+
+        function hideAllPoint()
+        {
+            hideCircle();
+            for (var i = 0; i < lstAllMarker.length; i++)
+            {
+                lstAllMarker[i].remove();
+            }
+            lstAllMarker = new Array();
+            hideBroken();
+            hideRut();
+        }
+    
+        function initMap()
+        {
+            clearMapOverLays();
+            getRutAndBroken();
+        }
+</script>
+

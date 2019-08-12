@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B3562BB4-1E1F-4C48-9333-58351001A244}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>M8</RootNamespace>
+    <AssemblyName>M8</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SandDock, Version=2.3.0.1, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\..\..\软件\二维码\CODEERwei\CODEERwei\bin\Debug\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class\ClsLogin.cs" />
+    <Compile Include="Class\ClsProject.cs" />
+    <Compile Include="Class\ClsTask.cs" />
+    <Compile Include="Class\ClsOrdinateTrans.cs" />
+    <Compile Include="Class\ClsCPoint.cs" />
+    <Compile Include="Class\ClsUser.cs" />
+    <Compile Include="Class\ClsSQLMethod.cs" />
+    <Compile Include="Class\ClsSQLConnection.cs" />
+    <Compile Include="Forms\FrmBreakageAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmBreakageAnalysis.Designer.cs">
+      <DependentUpon>FrmBreakageAnalysis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmDVCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmDVCopy.designer.cs">
+      <DependentUpon>FrmDVCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmPhotoCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmPhotoCopy.designer.cs">
+      <DependentUpon>FrmPhotoCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmProjectAnalyse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmProjectAnalyse.Designer.cs">
+      <DependentUpon>FrmProjectAnalyse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmScrollPic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmScrollPic.designer.cs">
+      <DependentUpon>FrmScrollPic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmTransferTXT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmTransferTXT.Designer.cs">
+      <DependentUpon>FrmTransferTXT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmfilterCondition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmfilterCondition.Designer.cs">
+      <DependentUpon>FrmfilterCondition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmCode2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmCode2.Designer.cs">
+      <DependentUpon>FrmCode2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmLogin.designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmMain.designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmNewPath.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmNewPath.Designer.cs">
+      <DependentUpon>FrmNewPath.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmProjectMng.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmProjectMng.Designer.cs">
+      <DependentUpon>FrmProjectMng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmProjectModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmProjectModify.Designer.cs">
+      <DependentUpon>FrmProjectModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmProjectNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmProjectNew.designer.cs">
+      <DependentUpon>FrmProjectNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmSQLConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSQLConfig.Designer.cs">
+      <DependentUpon>FrmSQLConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmSysConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSysConfig.Designer.cs">
+      <DependentUpon>FrmSysConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmTaskMng.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmTaskMng.Designer.cs">
+      <DependentUpon>FrmTaskMng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmTaskNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmTaskNew.Designer.cs">
+      <DependentUpon>FrmTaskNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmUserMng.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmUserMng.Designer.cs">
+      <DependentUpon>FrmUserMng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmUserNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmUserNew.Designer.cs">
+      <DependentUpon>FrmUserNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WinGroove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WinGroove.Designer.cs">
+      <DependentUpon>WinGroove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WinTraffic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WinTraffic.Designer.cs">
+      <DependentUpon>WinTraffic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\FrmfilterCondition.resx">
+      <DependentUpon>FrmfilterCondition.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmBreakageAnalysis.resx">
+      <DependentUpon>FrmBreakageAnalysis.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmDVCopy.resx">
+      <DependentUpon>FrmDVCopy.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmPhotoCopy.resx">
+      <DependentUpon>FrmPhotoCopy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmProjectAnalyse.resx">
+      <DependentUpon>FrmProjectAnalyse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmScrollPic.resx">
+      <DependentUpon>FrmScrollPic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmTransferTXT.resx">
+      <DependentUpon>FrmTransferTXT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmCode2.resx">
+      <DependentUpon>FrmCode2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmNewPath.resx">
+      <DependentUpon>FrmNewPath.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmProjectMng.resx">
+      <DependentUpon>FrmProjectMng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmProjectModify.resx">
+      <DependentUpon>FrmProjectModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmProjectNew.resx">
+      <DependentUpon>FrmProjectNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSQLConfig.resx">
+      <DependentUpon>FrmSQLConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSysConfig.resx">
+      <DependentUpon>FrmSysConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmTaskMng.resx">
+      <DependentUpon>FrmTaskMng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmTaskNew.resx">
+      <DependentUpon>FrmTaskNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmUserMng.resx">
+      <DependentUpon>FrmUserMng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmUserNew.resx">
+      <DependentUpon>FrmUserNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WinGroove.resx">
+      <DependentUpon>WinGroove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WinTraffic.resx">
+      <DependentUpon>WinTraffic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="js\map,oppc,tile,control" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\baidu.css" />
+    <Content Include="css\DrawingManager_min.css" />
+    <Content Include="css\images\bg.png" />
+    <Content Include="css\images\blank.gif" />
+    <Content Include="css\images\changfang.png" />
+    <Content Include="css\images\closedhand.cur" />
+    <Content Include="css\images\copyright_logo.png" />
+    <Content Include="css\images\daba.png" />
+    <Content Include="css\images\iw3.png" />
+    <Content Include="css\images\iws3.png" />
+    <Content Include="css\images\iw_close1d3.gif" />
+    <Content Include="css\images\iw_plus1d3.gif" />
+    <Content Include="css\images\mapctrls1d3.gif" />
+    <Content Include="css\images\mapctrls2d0.png" />
+    <Content Include="css\images\marker_red_sprite.png" />
+    <Content Include="css\images\moBtnClose_fdxwwt.png" />
+    <Content Include="css\images\openhand.cur" />
+    <Content Include="css\images\phone.png" />
+    <Content Include="css\images\qixiangzhan.png" />
+    <Content Include="css\images\ruler.cur" />
+    <Content Include="css\images\shuiwenzhan.png" />
+    <Content Include="css\images\st-close.png" />
+    <Content Include="css\scxnTabDiv.css" />
+    <Content Include="css\SearchInfoWindow_min.css" />
+    <Content Include="images\bg.png" />
+    <Content Include="images\blank.gif" />
+    <Content Include="images\cabin.png" />
+    <Content Include="images\changfang.png" />
+    <Content Include="images\closedhand.cur" />
+    <Content Include="images\copyright_logo.png" />
+    <Content Include="images\CustomerLocation_16x16.png" />
+    <Content Include="images\daba.png" />
+    <Content Include="images\icon_changfang.png" />
+    <Content Include="images\icon_changfang_big.png" />
+    <Content Include="images\icon_changfang_s.png" />
+    <Content Include="images\icon_daba.png" />
+    <Content Include="images\icon_daba_chws.png" />
+    <Content Include="images\icon_daba_lsg.png" />
+    <Content Include="images\icon_qiwenzhan.png" />
+    <Content Include="images\icon_qixiangzhan.png" />
+    <Content Include="images\icon_shuiwei.png" />
+    <Content Include="images\icon_shuiwei_byblk.png" />
+    <Content Include="images\icon_shuiwenzhan.png" />
+    <Content Include="images\icon_shuiwenzhan_byblk.png" />
+    <Content Include="images\icon_shuiwenzhan_chws.png" />
+    <Content Include="images\icon_shuiwenzhan_hegt.png" />
+    <Content Include="images\icon_shuiwenzhan_shth.png" />
+    <Content Include="images\iw3.png" />
+    <Content Include="images\iws3.png" />
+    <Content Include="images\iw_bg.png" />
+    <Content Include="images\iw_close1d3.gif" />
+    <Content Include="images\iw_plus1d3.gif" />
+    <Content Include="images\mapctrls.gif" />
+    <Content Include="images\mapctrls.png" />
+    <Content Include="images\mapctrls1d3.gif" />
+    <Content Include="images\mapctrls2d0.png" />
+    <Content Include="images\marker_red_sprite.png" />
+    <Content Include="images\moBtnClose_fdxwwt.png" />
+    <Content Include="images\openhand.cur" />
+    <Content Include="images\phone.png" />
+    <Content Include="images\qixiangzhan.png" />
+    <Content Include="images\ruler.cur" />
+    <Content Include="images\showDivBgImage.png" />
+    <Content Include="images\shuiwenzhan.png" />
+    <Content Include="images\simulator.jpg" />
+    <Content Include="images\simulator.png" />
+    <Content Include="images\st-close.png" />
+    <Content Include="images\tishikuang.png" />
+    <Content Include="images\水位站.png" />
+    <Content Include="images\河道断面.png" />
+    <Content Include="images\流域界.png" />
+    <Content Include="Image\647.jpg" />
+    <Content Include="Image\EditTask_32x32.png" />
+    <Content Include="Image\LoadPageSetup_32x32.png" />
+    <Content Include="index1.html" />
+    <Content Include="js\apiv1.3.min.js" />
+    <Content Include="js\AreaRestriction_min.js" />
+    <Content Include="js\BaiduApi_2.0.js" />
+    <Content Include="js\ComplexCustomOverlay.js" />
+    <Content Include="js\config.js" />
+    <Content Include="js\control.js" />
+    <Content Include="js\control_load.js" />
+    <Content Include="js\copyrightctrl_load.js" />
+    <Content Include="js\data_Map.js" />
+    <Content Include="js\DistanceTool_min.js" />
+    <Content Include="js\drawbysvg_load.js" />
+    <Content Include="js\drawbyvml_load.js" />
+    <Content Include="js\DrawingManager_min.js" />
+    <Content Include="js\draw_load.js" />
+    <Content Include="js\fromproduct_load.js" />
+    <Content Include="js\GeoUtils_min.js" />
+    <Content Include="js\getmodules.js" />
+    <Content Include="js\getmodules1.js" />
+    <Content Include="js\getmodules2.js" />
+    <Content Include="js\getmodules3.js" />
+    <Content Include="js\hotspot_load.js" />
+    <Content Include="js\map.js" />
+    <Content Include="js\mapclick_load.js" />
+    <Content Include="js\map_load.js" />
+    <Content Include="js\marker_load.js" />
+    <Content Include="js\navictrl_load.js" />
+    <Content Include="js\oppc.js" />
+    <Content Include="js\oppc_load.js" />
+    <Content Include="js\othersearch_load.js" />
+    <Content Include="js\panorama_load.js" />
+    <Content Include="js\poly_load.js" />
+    <Content Include="js\RectangleZoom_min.js" />
+    <Content Include="js\scommon_load.js" />
+    <Content Include="js\scxnLabel.js" />
+    <Content Include="js\scxnTabDiv.js" />
+    <Content Include="js\ScxnTools.js" />
+    <Content Include="js\SearchControl_min.js" />
+    <Content Include="js\SearchInfoWindow_min.js" />
+    <Content Include="js\TextIconOverlay_min.js" />
+    <Content Include="js\tile.js" />
+    <Content Include="js\tile_load.js" />
+    <Content Include="js\Transform.js" />
+    <Content Include="index2.html" />
+    <None Include="Resources\91RZON4ZCW23.jpg" />
+    <Content Include="Resources\flight.png" />
+    <Content Include="swf\abc.html" />
+    <Content Include="swf\charts.swf" />
+    <Content Include="swf\history\history.css" />
+    <Content Include="swf\history\history.js" />
+    <Content Include="swf\history\historyFrame.html" />
+    <Content Include="swf\IFrameTest.html" />
+    <Content Include="swf\swfobject.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tiles\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

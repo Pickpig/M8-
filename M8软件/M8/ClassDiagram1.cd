@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="M8.Class.ClsLogin">
+    <Position X="1" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAIAQAAAAAAAAIQAAAAAAA=</HashCode>
+      <FileName>Class\ClsLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="M8.Class.ClsProject" Collapsed="true">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAADAAAAAAAEIABAAAIAAAAAAEAAAAgAAIAAAQA=</HashCode>
+      <FileName>Class\ClsProject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="M8.Class.CoordinateTrans" Collapsed="true">
+    <Position X="3.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAACIIACCBAIAAQIAQhEAEAAAACAiAAIAAQCAABA=</HashCode>
+      <FileName>Class\CoordinateTrans.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>
